@@ -1,0 +1,1124 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#2563eb">
+<title>루미큐브 배우기 - 초등 튜토리얼</title>
+<style>
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{margin:0;padding:0}
+  body{
+    font-family:Pretendard,-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR","Malgun Gothic",sans-serif;
+    background:#eef1f6;color:#1c2430;font-size:16px;line-height:1.7;
+    -webkit-text-size-adjust:100%;
+  }
+  header{position:sticky;top:0;z-index:30;background:#fff;border-bottom:1px solid #dde2ea}
+  .htop{display:flex;align-items:center;gap:10px;max-width:780px;margin:0 auto;padding:10px 14px}
+  .htop .t{flex:1;min-width:0}
+  .htop .t b{display:block;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .htop .t span{font-size:12px;color:#68707d}
+  .bar{height:6px;background:#e3e8f0}
+  .bar i{display:block;height:100%;width:0;background:#2563eb;transition:width .3s ease}
+  .wrap{max-width:780px;margin:0 auto;padding:14px 14px 130px}
+  .card{background:#fff;border:1px solid #dde2ea;border-radius:16px;padding:18px;margin:0 0 14px}
+  h2{font-size:22px;margin:0 0 10px;line-height:1.35}
+  h3{font-size:17px;margin:18px 0 8px}
+  p{margin:8px 0}
+  ul{margin:8px 0;padding-left:20px}
+  li{margin:6px 0}
+  .lead{font-size:17px}
+  .big{font-size:19px;font-weight:700}
+  .muted{color:#68707d;font-size:14px}
+  .tipbox{background:#f3f7ff;border:1px solid #cfe0ff;border-radius:12px;padding:12px 14px;margin:12px 0}
+  .warnbox{background:#fff6f3;border:1px solid #ffd3c4;border-radius:12px;padding:12px 14px;margin:12px 0}
+  .okbox{background:#f1fbf5;border:1px solid #bfe9cf;border-radius:12px;padding:12px 14px;margin:12px 0}
+  .tipbox b,.warnbox b,.okbox b{display:block;margin-bottom:4px}
+
+  /* tiles */
+  .tile{
+    width:46px;height:62px;border-radius:9px;background:#fdfcf5;
+    border:1px solid #c7cdd8;border-bottom:3px solid #b9c0cc;
+    display:inline-flex;align-items:center;justify-content:center;
+    font-weight:800;font-size:25px;line-height:1;user-select:none;
+    touch-action:manipulation;flex:0 0 auto;position:relative;transition:transform .12s ease
+  }
+  .tile.sm{width:36px;height:50px;font-size:20px;border-radius:7px}
+  .tile.pick{cursor:pointer}
+  .tile.sel{outline:3px solid #2563eb;outline-offset:1px;transform:translateY(-10px)}
+  .tile.jk{font-size:26px;color:#1f2430}
+  .tile.jk::after{content:"";position:absolute;inset:6px;border-radius:50%;border:2px solid #1f2430;opacity:.25}
+  .row{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+  .arrowdown{font-size:20px;color:#68707d;margin:6px 0 2px}
+
+  .demo{border:1px solid #dde2ea;border-radius:12px;padding:12px;margin:12px 0;background:#fafbfd}
+  .demo .lab{font-size:12px;color:#68707d;margin-bottom:6px}
+  .sets{display:flex;flex-wrap:wrap;gap:10px}
+  .set{display:flex;gap:4px;padding:7px;border:2px dashed #c7cdd8;border-radius:12px;background:#fff;align-items:center}
+  .set.bad{border-color:#e0493b;background:#fff4f2}
+  .set.good{border-color:#2aa36a;background:#f4fdf8}
+  .set .addbtn{
+    width:40px;height:62px;border-radius:9px;border:2px dashed #2563eb;background:#eff5ff;color:#2563eb;
+    font-size:22px;font-weight:800;touch-action:manipulation
+  }
+  .newset{
+    display:flex;align-items:center;justify-content:center;gap:6px;min-width:150px;height:78px;
+    border:2px dashed #b9c0cc;border-radius:12px;color:#68707d;background:#fff;font-weight:700;font-size:14px;
+    touch-action:manipulation;padding:0 12px
+  }
+  .newset.on{border-color:#2563eb;color:#2563eb;background:#eff5ff}
+
+  .board{margin:14px 0 0}
+  .zone{border:1px solid #dde2ea;border-radius:14px;padding:12px;margin:10px 0;background:#f7f9fc}
+  .zone .zlab{font-size:13px;font-weight:800;color:#49525f;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center}
+  .zone.rackzone{background:#fff7e9;border-color:#f0dcb8}
+  .empty{color:#9aa3b0;font-size:14px;padding:10px 2px}
+  .acts{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+  button{font-family:inherit}
+  .btn{
+    border:0;border-radius:12px;padding:13px 16px;font-size:15px;font-weight:800;
+    background:#e6eaf1;color:#2b3340;touch-action:manipulation;min-height:48px
+  }
+  .btn.primary{background:#2563eb;color:#fff}
+  .btn.green{background:#14875a;color:#fff}
+  .btn.line{background:#fff;border:1px solid #c7cdd8}
+  .btn:disabled{opacity:.45}
+  .btn.small{padding:9px 12px;font-size:13px;min-height:40px}
+  .fb{margin-top:12px;padding:12px 14px;border-radius:12px;font-weight:700;display:none}
+  .fb.show{display:block}
+  .fb.ok{background:#e9f8ef;color:#13643f;border:1px solid #bfe9cf}
+  .fb.no{background:#fdeeeb;color:#9b2c1b;border:1px solid #ffd3c4}
+  .fb.info{background:#eff5ff;color:#1b4ba8;border:1px solid #cfe0ff}
+  .goal{background:#111827;color:#fff;border-radius:12px;padding:12px 14px;font-weight:700}
+  .goal span{display:block;font-size:12px;color:#aab4c4;font-weight:600;margin-bottom:2px}
+
+  /* quiz */
+  .choices{display:flex;flex-direction:column;gap:10px;margin-top:10px}
+  .choice{
+    display:flex;align-items:center;gap:10px;border:2px solid #dde2ea;background:#fff;border-radius:14px;
+    padding:12px;text-align:left;touch-action:manipulation;width:100%;font-size:15px;font-weight:700;color:#1c2430
+  }
+  .choice .ck{width:28px;height:28px;border-radius:50%;background:#eef1f6;display:flex;align-items:center;justify-content:center;font-size:14px;flex:0 0 auto}
+  .choice.right{border-color:#2aa36a;background:#f4fdf8}
+  .choice.wrong{border-color:#e0493b;background:#fff4f2}
+
+  /* score table */
+  table{border-collapse:collapse;width:100%;font-size:14px;margin-top:8px}
+  th,td{border:1px solid #dde2ea;padding:8px 6px;text-align:right}
+  th{background:#f3f6fb;text-align:center}
+  td:first-child,th:first-child{text-align:left}
+  tr.total td{font-weight:800;background:#fafbfd}
+  .plus{color:#14875a}.minus{color:#c0392b}
+
+  /* nav */
+  footer{position:fixed;left:0;right:0;bottom:0;background:#fff;border-top:1px solid #dde2ea;z-index:30;padding-bottom:env(safe-area-inset-bottom)}
+  .nav{max-width:780px;margin:0 auto;display:flex;gap:10px;padding:10px 14px}
+  .nav .btn{flex:1}
+  .skip{text-align:center;margin-top:10px}
+  .skip button{background:none;border:0;color:#8a93a1;font-size:13px;text-decoration:underline;padding:8px}
+
+  /* menu */
+  .sheet{position:fixed;inset:0;background:rgba(17,24,39,.5);z-index:40;display:none}
+  .sheet.on{display:block}
+  .sheet .inner{position:absolute;left:0;right:0;bottom:0;max-height:78%;overflow:auto;background:#fff;border-radius:18px 18px 0 0;padding:14px 14px calc(20px + env(safe-area-inset-bottom))}
+  .sheet h4{margin:4px 0 10px;font-size:16px}
+  .tocitem{display:flex;gap:10px;align-items:center;width:100%;border:0;background:#fff;border-bottom:1px solid #eef1f6;padding:13px 6px;text-align:left;font-size:15px;color:#1c2430;font-weight:600}
+  .tocitem .num{width:26px;height:26px;border-radius:50%;background:#eef1f6;font-size:12px;display:flex;align-items:center;justify-content:center;flex:0 0 auto;font-weight:800;color:#49525f}
+  .tocitem.cur{color:#2563eb}
+  .tocitem.cur .num{background:#2563eb;color:#fff}
+  .tocitem.done .num{background:#14875a;color:#fff}
+
+  .stats{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
+  .stat{flex:1;min-width:92px;border:1px solid #dde2ea;border-radius:12px;padding:10px;background:#fff}
+  .stat b{display:block;font-size:22px}
+  .stat span{font-size:12px;color:#68707d}
+  .cert{text-align:center;border:3px double #2563eb;border-radius:18px;padding:26px 16px;background:#fff}
+  .cert .big{font-size:26px;margin:8px 0}
+  @media (max-width:380px){
+    .tile{width:40px;height:55px;font-size:22px}
+    .set .addbtn{height:55px;width:36px}
+    h2{font-size:20px}
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="htop">
+    <button class="btn line small" id="menuBtn">목차</button>
+    <div class="t"><b id="hTitle">루미큐브 배우기</b><span id="hSub">0 / 0 단계</span></div>
+  </div>
+  <div class="bar"><i id="pbar"></i></div>
+</header>
+
+<div class="wrap"><div id="app"></div></div>
+
+<footer>
+  <div class="nav">
+    <button class="btn line" id="prevBtn">이전</button>
+    <button class="btn primary" id="nextBtn">다음</button>
+  </div>
+</footer>
+
+<div class="sheet" id="sheet"><div class="inner">
+  <h4>목차</h4>
+  <div id="toc"></div>
+  <div style="display:flex;gap:8px;margin-top:12px">
+    <button class="btn line" id="resetAll" style="flex:1">처음부터 다시</button>
+    <button class="btn" id="closeSheet" style="flex:1">닫기</button>
+  </div>
+</div></div>
+
+<script>
+(function(){
+"use strict";
+
+/* ===================== 타일 기본 ===================== */
+var COLOR = { b:"#1565c0", r:"#c62828", o:"#e08a00", k:"#1f2430" };
+var COLORNAME = { b:"파랑", r:"빨강", o:"주황", k:"검정" };
+var UID = 1;
+
+function T(n, c){ return { id: UID++, n: n, c: c, j: false }; }
+function JK(){ return { id: UID++, n: 0, c: "j", j: true }; }
+
+/* "b3 b4 b5" -> 타일 배열 */
+function parseTiles(str){
+  var out = [];
+  var parts = String(str).trim().split(/\s+/);
+  for (var i = 0; i < parts.length; i++){
+    var s = parts[i];
+    if (!s) continue;
+    if (s === "j"){ out.push(JK()); }
+    else { out.push(T(parseInt(s.slice(1), 10), s.charAt(0))); }
+  }
+  return out;
+}
+/* "b3 b4 b5 | o8 r8 k8" -> 세트 배열 */
+function parseSets(str){
+  if (!String(str).trim()) return [];
+  var chunks = String(str).split("|");
+  var out = [];
+  for (var i = 0; i < chunks.length; i++){
+    if (chunks[i].trim()) out.push(parseTiles(chunks[i]));
+  }
+  return out;
+}
+
+function tileHTML(t, cls){
+  var extra = cls ? (" " + cls) : "";
+  if (t.j){
+    return '<div class="tile jk' + extra + '" data-id="' + t.id + '">☺</div>';
+  }
+  return '<div class="tile' + extra + '" data-id="' + t.id + '" style="color:' + COLOR[t.c] + '">' + t.n + '</div>';
+}
+function rowHTML(tiles, cls){
+  var h = "";
+  for (var i = 0; i < tiles.length; i++) h += tileHTML(tiles[i], cls);
+  return '<div class="row">' + h + "</div>";
+}
+function setsStaticHTML(str, cls){
+  var sets = parseSets(str);
+  var h = "";
+  for (var i = 0; i < sets.length; i++){
+    var inner = "";
+    for (var k = 0; k < sets[i].length; k++) inner += tileHTML(sets[i][k], cls);
+    h += '<div class="set">' + inner + "</div>";
+  }
+  return '<div class="sets">' + h + "</div>";
+}
+
+/* ===================== 세트 규칙 ===================== */
+function validSet(ts){
+  if (!ts || ts.length < 3) return false;
+  var real = [], jk = 0, i;
+  for (i = 0; i < ts.length; i++){ if (ts[i].j) jk++; else real.push(ts[i]); }
+  if (real.length === 0) return false;
+
+  /* 그룹: 같은 숫자, 색 모두 다름, 최대 4개 */
+  var sameN = true;
+  for (i = 0; i < real.length; i++) if (real[i].n !== real[0].n) sameN = false;
+  if (sameN && ts.length <= 4){
+    var cols = {}, dup = false;
+    for (i = 0; i < real.length; i++){
+      if (cols[real[i].c]) dup = true;
+      cols[real[i].c] = 1;
+    }
+    if (!dup) return true;
+  }
+
+  /* 연속: 같은 색, 숫자가 이어짐 */
+  var sameC = true;
+  for (i = 0; i < real.length; i++) if (real[i].c !== real[0].c) sameC = false;
+  if (sameC){
+    var ns = [];
+    for (i = 0; i < real.length; i++) ns.push(real[i].n);
+    ns.sort(function(a,b){ return a-b; });
+    var dup2 = false;
+    for (i = 1; i < ns.length; i++) if (ns[i] === ns[i-1]) dup2 = true;
+    if (!dup2){
+      var span = ns[ns.length-1] - ns[0] + 1;
+      var gaps = span - ns.length;
+      if (gaps <= jk){
+        var extra = jk - gaps;
+        var lo = ns[0], hi = ns[ns.length-1];
+        var room = (lo - 1) + (13 - hi);
+        if (span <= 13 && extra <= room) return true;
+      }
+    }
+  }
+  return false;
+}
+
+function setValue(ts){
+  var real = [], jk = 0, i;
+  for (i = 0; i < ts.length; i++){ if (ts[i].j) jk++; else real.push(ts[i]); }
+  if (!real.length) return 0;
+  var sameN = true;
+  for (i = 0; i < real.length; i++) if (real[i].n !== real[0].n) sameN = false;
+  if (sameN) return real[0].n * ts.length;
+  var ns = [];
+  for (i = 0; i < real.length; i++) ns.push(real[i].n);
+  ns.sort(function(a,b){ return a-b; });
+  var lo = ns[0], hi = ns[ns.length-1], sum = 0;
+  for (i = lo; i <= hi; i++) sum += i;
+  var extra = jk - ((hi - lo + 1) - real.length);
+  while (extra > 0){
+    if (hi < 13){ hi++; sum += hi; }
+    else if (lo > 1){ lo--; sum += lo; }
+    else break;
+    extra--;
+  }
+  return sum;
+}
+
+function tableValue(table){
+  var s = 0;
+  for (var i = 0; i < table.length; i++) s += setValue(table[i]);
+  return s;
+}
+
+function displayOrder(ts){
+  var real = [], jk = [], i;
+  for (i = 0; i < ts.length; i++){ if (ts[i].j) jk.push(ts[i]); else real.push(ts[i]); }
+  if (!real.length) return ts.slice();
+  real.sort(function(a,b){ return a.n - b.n; });
+  var sameN = true;
+  for (i = 0; i < real.length; i++) if (real[i].n !== real[0].n) sameN = false;
+  if (sameN) return real.concat(jk);
+  var out = [], ji = 0;
+  for (i = 0; i < real.length; i++){
+    if (i > 0){
+      var gap = real[i].n - real[i-1].n - 1;
+      while (gap > 0 && ji < jk.length){ out.push(jk[ji++]); gap--; }
+    }
+    out.push(real[i]);
+  }
+  while (ji < jk.length) out.push(jk[ji++]);
+  return out;
+}
+
+/* ===================== 보드 (실습 + 미니게임 공용) ===================== */
+function makeBoard(host, cfg){
+  var init = cfg.setup();
+  var S = {
+    rack: init.rack,
+    table: init.table,
+    sel: {},
+    badIdx: -1,
+    firstDone: cfg.mode === "game" ? false : true,
+    pool: init.pool || [],
+    turn: 1,
+    snapRack: null,
+    snapTable: null,
+    finished: false
+  };
+  takeSnap();
+
+  function takeSnap(){
+    S.snapRack = S.rack.slice();
+    S.snapTable = S.table.map(function(s){ return s.slice(); });
+  }
+  function selCount(){ var n = 0; for (var k in S.sel) if (S.sel[k]) n++; return n; }
+  function clearSel(){ S.sel = {}; }
+
+  function findTile(id){
+    var i, k;
+    for (i = 0; i < S.rack.length; i++) if (S.rack[i].id === id) return { where:"rack", si:-1, ti:i, t:S.rack[i] };
+    for (i = 0; i < S.table.length; i++)
+      for (k = 0; k < S.table[i].length; k++)
+        if (S.table[i][k].id === id) return { where:"table", si:i, ti:k, t:S.table[i][k] };
+    return null;
+  }
+  function pullSelected(){
+    var ids = [], k;
+    for (k in S.sel) if (S.sel[k]) ids.push(parseInt(k,10));
+    var moved = [];
+    for (var i = 0; i < ids.length; i++){
+      var f = findTile(ids[i]);
+      if (!f) continue;
+      moved.push(f.t);
+      if (f.where === "rack") S.rack.splice(f.ti,1);
+      else S.table[f.si].splice(f.ti,1);
+    }
+    S.table = S.table.filter(function(s){ return s.length > 0; });
+    clearSel();
+    return moved;
+  }
+
+  function fbHTML(){ return '<div class="fb" id="fb-' + cfg.key + '"></div>'; }
+
+  function say(type, msg){
+    var el = host.querySelector(".fb");
+    if (!el) return;
+    el.className = "fb show " + type;
+    el.innerHTML = msg;
+  }
+  function hideSay(){
+    var el = host.querySelector(".fb");
+    if (el) el.className = "fb";
+  }
+
+  function render(){
+    var i, k, html = "";
+
+    if (cfg.goal){
+      html += '<div class="goal"><span>할 일</span>' + cfg.goal + "</div>";
+    }
+
+    if (cfg.mode === "game"){
+      html += '<div class="stats">'
+        + '<div class="stat"><b>' + S.rack.length + '</b><span>내 타일</span></div>'
+        + '<div class="stat"><b>' + S.pool.length + '</b><span>풀에 남은 타일</span></div>'
+        + '<div class="stat"><b>' + S.turn + '</b><span>차례</span></div>'
+        + '<div class="stat"><b>' + (S.firstDone ? "완료" : "아직") + '</b><span>첫 등록(30점)</span></div>'
+        + "</div>";
+    }
+
+    /* 테이블 */
+    html += '<div class="zone"><div class="zlab"><span>테이블</span>';
+    if (cfg.showSum) html += '<span>테이블 점수 ' + tableValue(S.table) + '점</span>';
+    html += "</div>";
+    html += '<div class="sets">';
+    if (!S.table.length) html += '<div class="empty">아직 내려놓은 타일이 없어요.</div>';
+    for (i = 0; i < S.table.length; i++){
+      var cls = "set";
+      if (S.badIdx === i) cls += " bad";
+      html += '<div class="' + cls + '" data-set="' + i + '">';
+      var ordered = displayOrder(S.table[i]);
+      for (k = 0; k < ordered.length; k++){
+        var t = ordered[k];
+        var tc = cfg.allowTableMove ? "pick" : "";
+        if (S.sel[t.id]) tc += " sel";
+        html += tileHTML(t, tc);
+      }
+      if (selCount() > 0) html += '<button class="addbtn" data-addto="' + i + '">+</button>';
+      html += "</div>";
+    }
+    html += '<button class="newset' + (selCount() > 0 ? " on" : "") + '" data-newset="1">＋ 새 세트로 내려놓기</button>';
+    html += "</div></div>";
+
+    /* 받침대 */
+    html += '<div class="zone rackzone"><div class="zlab"><span>내 받침대</span>';
+    if (cfg.mode === "game") html += '<button class="btn line small" data-sort="1">정렬</button>';
+    html += "</div><div class=\"row\">";
+    if (!S.rack.length) html += '<div class="empty">받침대가 비었어요!</div>';
+    for (i = 0; i < S.rack.length; i++){
+      html += tileHTML(S.rack[i], "pick" + (S.sel[S.rack[i].id] ? " sel" : ""));
+    }
+    html += "</div></div>";
+
+    /* 버튼 */
+    html += '<div class="acts">';
+    if (cfg.mode === "game"){
+      html += '<button class="btn green" data-act="check">내려놓기 확정</button>';
+      html += '<button class="btn line" data-act="undo">되돌리기</button>';
+      html += '<button class="btn" data-act="draw"' + (S.pool.length ? "" : " disabled") + '>타일 가져오기</button>';
+      html += '<button class="btn line" data-act="newgame">새 게임</button>';
+    } else {
+      html += '<button class="btn green" data-act="check">확인하기</button>';
+      html += '<button class="btn line" data-act="undo">처음으로</button>';
+      if (cfg.hint) html += '<button class="btn line" data-act="hint">힌트</button>';
+    }
+    html += "</div>";
+    html += '<div class="fb"></div>';
+
+    host.innerHTML = '<div class="board">' + html + "</div>";
+    bind();
+  }
+
+  function bind(){
+    var tiles = host.querySelectorAll(".tile.pick");
+    for (var i = 0; i < tiles.length; i++){
+      tiles[i].addEventListener("click", function(){
+        var id = parseInt(this.getAttribute("data-id"), 10);
+        S.sel[id] = !S.sel[id];
+        S.badIdx = -1;
+        render();
+      });
+    }
+    var adds = host.querySelectorAll("[data-addto]");
+    for (var k = 0; k < adds.length; k++){
+      adds[k].addEventListener("click", function(e){
+        e.stopPropagation();
+        var idx = parseInt(this.getAttribute("data-addto"), 10);
+        var target = S.table[idx];
+        var moved = pullSelected();
+        var pos = S.table.indexOf(target);
+        if (pos < 0){ S.table.push(moved); }
+        else { S.table[pos] = S.table[pos].concat(moved); }
+        S.badIdx = -1;
+        hideSay(); render();
+      });
+    }
+    var ns = host.querySelector("[data-newset]");
+    if (ns) ns.addEventListener("click", function(){
+      if (selCount() === 0){ say("info", "먼저 아래 받침대에서 타일을 눌러 고르세요."); return; }
+      var moved = pullSelected();
+      S.table.push(moved);
+      S.badIdx = -1;
+      hideSay(); render();
+    });
+    var sortBtn = host.querySelector("[data-sort]");
+    if (sortBtn) sortBtn.addEventListener("click", function(){
+      S.rack.sort(function(a,b){
+        if (a.j) return 1;
+        if (b.j) return -1;
+        if (a.c !== b.c) return "brok".indexOf(a.c) - "brok".indexOf(b.c);
+        return a.n - b.n;
+      });
+      render();
+    });
+    var acts = host.querySelectorAll("[data-act]");
+    for (var m = 0; m < acts.length; m++){
+      acts[m].addEventListener("click", function(){
+        var a = this.getAttribute("data-act");
+        if (a === "check") doCheck();
+        else if (a === "undo") doUndo();
+        else if (a === "draw") doDraw();
+        else if (a === "hint"){ say("info", "힌트 - " + cfg.hint); }
+        else if (a === "newgame"){ var fresh = cfg.setup(); S.rack = fresh.rack; S.table = fresh.table; S.pool = fresh.pool || []; S.turn = 1; S.firstDone = false; S.finished = false; clearSel(); takeSnap(); render(); }
+      });
+    }
+  }
+
+  function firstBadSet(){
+    for (var i = 0; i < S.table.length; i++) if (!validSet(S.table[i])) return i;
+    return -1;
+  }
+
+  function doUndo(){
+    S.rack = S.snapRack.slice();
+    S.table = S.snapTable.map(function(s){ return s.slice(); });
+    clearSel(); S.badIdx = -1; hideSay(); render();
+  }
+
+  function doDraw(){
+    doUndo();
+    if (!S.pool.length) return;
+    S.rack.push(S.pool.pop());
+    S.turn++;
+    takeSnap();
+    render();
+    say("info", "풀에서 타일 1개를 가져왔어요. 내 차례가 끝났습니다.");
+  }
+
+  function doCheck(){
+    clearSel();
+    var bad = firstBadSet();
+    if (bad >= 0){
+      S.badIdx = bad;
+      render();
+      say("no", "빨간 테두리 세트를 다시 보세요. 세트는 <b>같은 숫자 다른 색 3~4개</b>(그룹) 또는 <b>같은 색 이어지는 숫자 3개 이상</b>(연속)이어야 해요.");
+      return;
+    }
+    S.badIdx = -1;
+
+    if (cfg.mode === "game"){
+      var playedCount = 0;
+      var rackIds = {};
+      for (var i = 0; i < S.rack.length; i++) rackIds[S.rack[i].id] = 1;
+      for (var k = 0; k < S.snapRack.length; k++) if (!rackIds[S.snapRack[k].id]) playedCount++;
+      if (playedCount === 0){
+        render();
+        say("no", "받침대에서 타일을 1개 이상 내려놓아야 해요. 내려놓을 게 없으면 <b>타일 가져오기</b>를 누르세요.");
+        return;
+      }
+      if (!S.firstDone){
+        var v = tableValue(S.table);
+        if (v < 30){
+          render();
+          say("no", "첫 등록은 숫자의 합이 <b>30점 이상</b>이어야 해요. 지금은 " + v + "점입니다.");
+          return;
+        }
+        S.firstDone = true;
+      }
+      S.turn++;
+      takeSnap();
+      if (!S.rack.length){
+        S.finished = true;
+        render();
+        say("ok", "루미큐브! 타일을 모두 내려놓았어요. " + (S.turn - 1) + "번의 차례 만에 성공했습니다.");
+        if (cfg.onPass) cfg.onPass();
+        return;
+      }
+      render();
+      say("ok", "좋아요! 규칙에 맞게 내려놓았습니다. 계속 해보세요.");
+      return;
+    }
+
+    var res = cfg.check(S);
+    render();
+    if (res.ok){
+      say("ok", res.msg);
+      if (cfg.onPass) cfg.onPass();
+    } else {
+      say("no", res.msg);
+    }
+  }
+
+  render();
+  return { render: render };
+}
+
+/* ===================== 실습 설정 ===================== */
+function allValid(S){
+  for (var i = 0; i < S.table.length; i++) if (!validSet(S.table[i])) return false;
+  return S.table.length > 0;
+}
+
+var PRACTICE = {
+  p_group: {
+    goal: "받침대에서 타일을 골라 <b>그룹</b> 한 세트를 테이블에 내려놓으세요.",
+    hint: "같은 숫자 7이 색깔별로 3개 있어요. 7 세 개를 고르고 '＋ 새 세트로 내려놓기'를 누르세요.",
+    setup: function(){ return { rack: parseTiles("b7 r7 k7 b3 o9"), table: [] }; },
+    check: function(S){
+      if (S.table.length !== 1) return { ok:false, msg:"테이블에 세트 한 개만 만들어 보세요." };
+      if (!validSet(S.table[0])) return { ok:false, msg:"그룹이 아니에요. 같은 숫자인데 색깔은 모두 달라야 해요." };
+      return { ok:true, msg:"정답! 같은 숫자 7을 색깔 다르게 3개 모았으니 <b>그룹</b>이에요." };
+    }
+  },
+  p_run: {
+    goal: "이번에는 <b>연속</b> 한 세트를 내려놓으세요.",
+    hint: "파랑 3, 4, 5처럼 같은 색이면서 숫자가 하나씩 커지는 타일 3개를 고르세요.",
+    setup: function(){ return { rack: parseTiles("b3 b4 b5 r5 b7"), table: [] }; },
+    check: function(S){
+      if (S.table.length !== 1) return { ok:false, msg:"테이블에 세트 한 개만 만들어 보세요." };
+      if (!validSet(S.table[0])) return { ok:false, msg:"연속이 아니에요. 색이 같고 숫자가 하나씩 이어져야 해요." };
+      return { ok:true, msg:"정답! 같은 색으로 숫자가 이어지니까 <b>연속</b>이에요." };
+    }
+  },
+  p_first: {
+    goal: "첫 등록을 해봅시다. 받침대 타일만 써서 <b>합이 30점 이상</b> 되게 내려놓으세요.",
+    hint: "빨강 10, 11, 12를 모으면 10+11+12 = 33점이에요.",
+    showSum: true,
+    setup: function(){ return { rack: parseTiles("r10 r11 r12 b4 o9 k2"), table: [] }; },
+    check: function(S){
+      if (!S.table.length) return { ok:false, msg:"아직 아무것도 내려놓지 않았어요." };
+      if (!allValid(S)) return { ok:false, msg:"규칙에 맞지 않는 세트가 있어요. 그룹이나 연속이어야 해요." };
+      var v = tableValue(S.table);
+      if (v < 30) return { ok:false, msg:"합이 " + v + "점이에요. 30점이 넘어야 첫 등록을 할 수 있어요." };
+      return { ok:true, msg:"성공! 합이 " + v + "점이라서 첫 등록에 성공했어요." };
+    }
+  },
+  p_add: {
+    goal: "받침대의 타일 2개를 테이블 세트에 <b>붙여서</b> 받침대를 비우세요.",
+    hint: "파랑 3은 파랑 4·5·6 세트의 '＋' 버튼에, 파랑 8은 8 그룹의 '＋' 버튼에 붙이세요.",
+    setup: function(){ return { rack: parseTiles("b3 b8"), table: parseSets("b4 b5 b6 | o8 r8 k8") }; },
+    check: function(S){
+      if (S.rack.length) return { ok:false, msg:"받침대에 타일이 남아 있어요. 두 개 모두 붙여 보세요." };
+      if (!allValid(S)) return { ok:false, msg:"규칙에 맞지 않는 세트가 있어요. 다시 해볼까요?" };
+      return { ok:true, msg:"정답! 이렇게 테이블 세트에 타일을 붙일 수 있어요." };
+    }
+  },
+  p_take4: {
+    goal: "4개짜리 그룹에서 파랑 4를 <b>빌려와</b> 파랑 3·4·5·6 연속을 만드세요.",
+    hint: "테이블의 파랑 4를 누르고, 받침대의 3·5·6도 함께 누른 다음 '＋ 새 세트로 내려놓기'를 누르세요.",
+    allowTableMove: true,
+    setup: function(){ return { rack: parseTiles("b3 b5 b6"), table: parseSets("b4 r4 k4 o4") }; },
+    check: function(S){
+      if (S.rack.length) return { ok:false, msg:"받침대 타일 3개를 모두 내려놓아야 해요." };
+      if (!allValid(S)) return { ok:false, msg:"남은 세트도 3개 이상이어야 해요. 테이블에 1~2개만 남기면 안 돼요." };
+      return { ok:true, msg:"정답! 4개 그룹은 하나를 빼도 3개가 남아서 괜찮아요." };
+    }
+  },
+  p_addtake: {
+    goal: "파랑 11을 붙이고, 파랑 8을 빼와서 8 그룹을 만드세요.",
+    hint: "① 파랑 11을 8·9·10 세트에 붙이기 → ② 파랑 8을 누르고 검정 8, 주황 8과 함께 새 세트 만들기.",
+    allowTableMove: true,
+    setup: function(){ return { rack: parseTiles("b11 k8 o8"), table: parseSets("b8 b9 b10") }; },
+    check: function(S){
+      if (S.rack.length) return { ok:false, msg:"받침대 타일 3개를 모두 내려놓아야 해요." };
+      if (!allValid(S)) return { ok:false, msg:"모든 세트가 3개 이상이고 규칙에 맞아야 해요." };
+      return { ok:true, msg:"정답! 붙이고 빼오는 방법까지 성공했어요." };
+    }
+  },
+  p_split: {
+    goal: "빨강 4~8 연속을 <b>둘로 잘라</b> 받침대의 빨강 6을 내려놓으세요.",
+    hint: "테이블의 빨강 6·7·8을 누르고 '＋ 새 세트'로 옮긴 뒤, 받침대 6을 남은 4·5 세트에 붙이세요.",
+    allowTableMove: true,
+    setup: function(){ return { rack: parseTiles("r6"), table: parseSets("r4 r5 r6 r7 r8") }; },
+    check: function(S){
+      if (S.rack.length) return { ok:false, msg:"받침대의 빨강 6을 내려놓아야 해요." };
+      if (!allValid(S)) return { ok:false, msg:"두 세트 모두 3개 이상이어야 해요." };
+      if (S.table.length !== 2) return { ok:false, msg:"연속을 두 개로 나누어 보세요." };
+      return { ok:true, msg:"정답! 4·5·6 과 6·7·8, 두 개의 연속이 되었어요." };
+    }
+  },
+  p_joker: {
+    goal: "조커 자리에 파랑 5를 넣고, 꺼낸 조커로 새 세트를 만들어 받침대를 비우세요.",
+    hint: "① 파랑 5를 6·7 세트에 붙이면 5·6·7이 돼요. ② 조커를 누르고 빨강 11, 검정 11과 함께 새 세트를 만드세요.",
+    allowTableMove: true,
+    setup: function(){ return { rack: parseTiles("b5 r11 k11"), table: parseSets("b6 b7 j") }; },
+    check: function(S){
+      if (S.rack.length) return { ok:false, msg:"받침대 타일 3개를 모두 내려놓아야 해요." };
+      if (!allValid(S)) return { ok:false, msg:"모든 세트가 규칙에 맞아야 해요. 조커는 빈 자리를 대신하는 타일이에요." };
+      return { ok:true, msg:"정답! 조커를 꺼내면 바로 새 세트에 써야 한다는 것을 기억하세요." };
+    }
+  }
+};
+
+/* ===================== 미니게임 ===================== */
+function gameSetup(){
+  var pool = [], c, n, rep;
+  var cols = ["b","r","o","k"];
+  for (rep = 0; rep < 2; rep++)
+    for (c = 0; c < 4; c++)
+      for (n = 1; n <= 13; n++) pool.push(T(n, cols[c]));
+  pool.push(JK()); pool.push(JK());
+  for (var i = pool.length - 1; i > 0; i--){
+    var j = Math.floor(Math.random() * (i + 1));
+    var tmp = pool[i]; pool[i] = pool[j]; pool[j] = tmp;
+  }
+  var rack = pool.splice(0, 14);
+  rack.sort(function(a,b){
+    if (a.j) return 1;
+    if (b.j) return -1;
+    if (a.c !== b.c) return "brok".indexOf(a.c) - "brok".indexOf(b.c);
+    return a.n - b.n;
+  });
+  return { rack: rack, table: [], pool: pool };
+}
+
+/* ===================== 퀴즈 ===================== */
+var QUIZ = {
+  q_set: {
+    q: "다음 중 <b>올바르지 않은</b> 세트는 무엇일까요?",
+    choices: [
+      { tiles:"b5 r5 k5", ok:false },
+      { tiles:"o12 o13 o1", ok:true },
+      { tiles:"r7 r8 r9", ok:false },
+      { tiles:"b2 r2 o2 k2", ok:false }
+    ],
+    explain: "1은 가장 낮은 숫자여서 13 뒤에 올 수 없어요. 그래서 12·13·1은 연속이 될 수 없습니다."
+  },
+  q_score: {
+    q: "A가 타일을 모두 내려놓고 \"루미큐브!\"를 외쳤어요. 남은 타일 합이 B는 15, C는 20, D는 5일 때 <b>A의 점수</b>는?",
+    choices: [
+      { text:"+40점", ok:true },
+      { text:"-40점", ok:false },
+      { text:"+20점", ok:false },
+      { text:"0점", ok:false }
+    ],
+    explain: "진 사람은 자기 타일 합만큼 마이너스(-15, -20, -5), 이긴 사람은 그 합을 모두 더한 만큼 플러스(+40)를 받아요."
+  }
+};
+
+/* ===================== 단계 내용 ===================== */
+var STEPS = [
+  {
+    title: "루미큐브, 이렇게 배워요",
+    html:
+      '<p class="lead">루미큐브는 숫자 타일로 <b>세트</b>를 만들어, 내 타일을 가장 먼저 다 내려놓으면 이기는 게임이에요.</p>' +
+      '<div class="demo"><div class="lab">이런 걸 만들게 돼요</div>' + setsStaticHTML("b4 b5 b6 b7 | o9 r9 k9") + "</div>" +
+      '<div class="tipbox"><b>튜토리얼 사용법</b>' +
+      "<ul><li>설명을 읽고, <b>직접 타일을 눌러서</b> 연습해요.</li>" +
+      "<li>타일을 누르면 위로 쏙 올라와요(선택). 다시 누르면 내려가요.</li>" +
+      "<li>고른 타일은 <b>＋ 새 세트로 내려놓기</b> 또는 세트 옆 <b>＋</b> 버튼으로 옮겨요.</li>" +
+      "<li>막히면 <b>힌트</b>를 누르세요.</li></ul></div>" +
+      '<p class="muted">모두 23단계예요. 중간에 그만두어도 다음에 이어서 할 수 있어요.</p>'
+  },
+  {
+    title: "상자 안에 무엇이 있나요",
+    html:
+      '<p>루미큐브 <b>클래식 미니</b> 상자에는 이렇게 들어 있어요.</p>' +
+      "<ul>" +
+      "<li><b>타일 106개</b> - 1부터 13까지 숫자가 <b>4가지 색</b>(파랑·빨강·주황·검정)으로 각각 <b>2세트</b>씩</li>" +
+      "<li><b>조커 타일 2개</b> - 아무 타일이나 대신할 수 있는 만능 타일</li>" +
+      "<li><b>받침대 4개</b> - 내 타일을 남들이 못 보게 세워두는 판</li>" +
+      "</ul>" +
+      '<div class="demo"><div class="lab">1부터 13까지, 색깔은 네 가지</div>' +
+      rowHTML(parseTiles("b1 r2 o3 k4 b11 r12 o13"), "sm") +
+      '<div class="lab" style="margin-top:10px">조커 타일</div>' + rowHTML([JK()], "sm") + "</div>" +
+      '<div class="tipbox"><b>참고</b>루미큐브 XP와 XP 미니는 5~6명이 놀 수 있어요. 타일 160개(각 색 3세트 + 조커 4개)와 받침대 6개가 들어 있습니다.</div>'
+  },
+  {
+    title: "게임의 목표",
+    html:
+      '<p class="big">내 받침대에 있는 타일을 모두 테이블에 내려놓고 "루미큐브!" 하고 외치면 이겨요.</p>' +
+      "<p>단, 아무렇게나 내려놓을 수는 없어요. 반드시 <b>세트</b> 모양으로 내려놓아야 합니다. 세트에는 <b>그룹</b>과 <b>연속</b> 두 가지가 있어요. 다음 단계에서 하나씩 배워봅시다.</p>" +
+      '<div class="okbox"><b>한 줄 정리</b>타일을 세트로 바꿔서 전부 내보내기!</div>'
+  },
+  {
+    title: "세트 ① 그룹(Group)",
+    html:
+      '<p class="big">같은 숫자 + 서로 다른 색 + 3개나 4개</p>' +
+      '<div class="demo"><div class="lab">그룹 예시</div>' + setsStaticHTML("o7 k7 r7 b7 | b9 r9 k9") + "</div>" +
+      '<div class="warnbox"><b>안 되는 경우</b>색이 겹치면 안 돼요. (파랑 7 + 파랑 7 + 빨강 7 ✕)<br>5개 이상도 안 돼요. 색이 4가지뿐이니까요.</div>' +
+      '<h3>직접 해보기</h3><div data-practice="p_group"></div>',
+    practice: "p_group"
+  },
+  {
+    title: "세트 ② 연속(Run)",
+    html:
+      '<p class="big">같은 색 + 숫자가 하나씩 이어짐 + 3개 이상</p>' +
+      '<div class="demo"><div class="lab">연속 예시</div>' + setsStaticHTML("b3 b4 b5 b6 | r9 r10 r11") + "</div>" +
+      '<div class="warnbox"><b>꼭 기억할 것</b>1이 가장 낮은 숫자예요. <b>13 뒤에 1이 올 수 없어요.</b> (12·13·1 ✕)</div>' +
+      '<h3>직접 해보기</h3><div data-practice="p_run"></div>',
+    practice: "p_run"
+  },
+  {
+    title: "세트 퀴즈",
+    html: '<p>지금까지 배운 세트 규칙을 확인해 볼까요?</p><div data-quiz="q_set"></div>',
+    quiz: "q_set"
+  },
+  {
+    title: "게임 준비하기",
+    html:
+      "<ol>" +
+      "<li>타일을 모두 <b>뒤집어서</b> 잘 섞어요.</li>" +
+      "<li>한 사람씩 타일을 하나 골라, <b>가장 큰 숫자</b>를 뽑은 사람이 먼저 시작해요.</li>" +
+      "<li>뽑았던 타일은 다시 넣고 또 섞어요.</li>" +
+      "<li>타일을 <b>7개씩 쌓아</b> 두고, 각자 <b>2묶음(=14개)</b>을 가져가 받침대에 올려요.</li>" +
+      "<li>남은 타일 더미는 <b>'풀(pool)'</b>이라고 불러요.</li>" +
+      "</ol>" +
+      '<div class="tipbox"><b>진행 방향</b>게임은 <b>시계 방향(왼쪽)</b>으로 돌아가요.</div>'
+  },
+  {
+    title: "첫 등록 - 30점 규칙",
+    html:
+      '<p class="big">처음 타일을 내려놓을 때는 숫자의 합이 30점 이상이어야 해요. 이것을 <b>등록</b>이라고 불러요.</p>' +
+      "<ul>" +
+      "<li>첫 등록은 <b>내 받침대 타일만</b> 써야 해요. 테이블에 있는 남의 타일은 쓸 수 없어요.</li>" +
+      "<li>세트 한 개로 30점을 넘겨도 되고, 여러 세트를 한꺼번에 내려놓아 합쳐서 30점을 넘겨도 돼요.</li>" +
+      "<li>첫 등록에 조커를 쓰면, 조커가 놓인 <b>자리의 숫자</b>로 계산해요.</li>" +
+      "</ul>" +
+      '<div class="demo"><div class="lab">예시: 11+12+13 = 36점 → 등록 성공</div>' + setsStaticHTML("r11 r12 r13") + "</div>" +
+      '<h3>직접 해보기</h3><div data-practice="p_first"></div>',
+    practice: "p_first"
+  },
+  {
+    title: "내 차례에 하는 일",
+    html:
+      "<ul>" +
+      "<li>내려놓을 수 있으면 세트를 만들어 내려놓아요.</li>" +
+      "<li>내려놓을 게 없거나, 이번엔 안 내겠다고 정하면 <b>풀에서 타일 1개</b>를 가져와요. 타일을 가져오면 내 차례는 바로 끝나요.</li>" +
+      "<li>한 사람의 차례는 <b>1분</b>까지예요. 1분이 지나면 타일 1개를 가져가고 차례가 끝나요.</li>" +
+      "<li>1분 안에 세트를 못 끝내면, 타일을 <b>원래 자리로 되돌리고</b> 내가 내려놓은 건 다시 가져간 뒤 <b>벌칙으로 풀에서 3개</b>를 가져와요.</li>" +
+      "<li>차례가 끝났을 때 테이블에는 <b>규칙에 맞지 않는 타일이 하나도 남아 있으면 안 돼요.</b></li>" +
+      "</ul>" +
+      '<div class="tipbox"><b>첫 등록 다음부터는?</b>테이블에 놓인 타일을 마음대로 옮기고 섞어서 내 타일을 내려놓을 수 있어요. 이것이 다음에 배울 <b>숫자조합</b>이에요.</div>'
+  },
+  {
+    title: "숫자조합의 황금 규칙",
+    html:
+      '<p>숫자조합(Manipulation)은 루미큐브에서 가장 재미있는 부분이에요. 테이블 위에 이미 놓인 타일을 <b>다시 배치하거나 붙여서</b> 새로운 세트를 만드는 것이죠.</p>' +
+      '<div class="warnbox"><b>황금 규칙</b>내 차례가 끝났을 때, 테이블 위의 모든 타일은 <b>반드시 3개 이상의 올바른 세트</b>를 이루어야 해요. 1개나 2개만 외롭게 남아 있으면 안 됩니다.</div>' +
+      '<div class="demo"><div class="lab">이렇게 남기면 안 돼요</div>' + setsStaticHTML("b4 b5") + '<p class="muted" style="margin:8px 0 0">2개만 남았으니 반칙!</p></div>' +
+      "<p>이제 숫자조합 6가지 방법을 하나씩 배워봅시다.</p>"
+  },
+  {
+    title: "조합 ① 타일 붙이기",
+    html:
+      '<p>가장 쉬운 방법이에요. 테이블 세트의 <b>앞·뒤에 붙이거나</b>, 그룹에 <b>다른 색을 더하는</b> 거예요.</p>' +
+      '<div class="demo"><div class="lab">테이블 (바뀌기 전)</div>' + setsStaticHTML("b4 b5 b6 | o8 r8 k8", "sm") +
+      '<div class="arrowdown">▼ 내 받침대의 파랑 3과 파랑 8을 붙이면</div>' + setsStaticHTML("b3 b4 b5 b6 | o8 r8 k8 b8", "sm") + "</div>" +
+      '<h3>직접 해보기</h3><div data-practice="p_add"></div>',
+    practice: "p_add"
+  },
+  {
+    title: "조합 ② 4개 그룹에서 1개 빌리기",
+    html:
+      '<p>타일 4개짜리 그룹에서는 하나를 빼도 3개가 남아요. 그래서 <b>한 개를 빌려와</b> 새 세트를 만들 수 있어요.</p>' +
+      '<div class="demo"><div class="lab">테이블 (바뀌기 전)</div>' + setsStaticHTML("b4 r4 k4 o4", "sm") +
+      '<div class="arrowdown">▼ 파랑 4를 빌려오고, 내 3·5·6을 더하면</div>' + setsStaticHTML("b3 b4 b5 b6 | r4 k4 o4", "sm") + "</div>" +
+      '<h3>직접 해보기</h3><p class="muted">테이블 타일도 눌러서 옮길 수 있어요.</p><div data-practice="p_take4"></div>',
+    practice: "p_take4"
+  },
+  {
+    title: "조합 ③ 붙이고 빼오기",
+    html:
+      '<p>3개짜리 세트에 내 타일을 <b>붙여서 4개로 만든 뒤</b>, 그중 하나를 빼오는 방법이에요.</p>' +
+      '<div class="demo"><div class="lab">테이블 (바뀌기 전)</div>' + setsStaticHTML("b8 b9 b10", "sm") +
+      '<div class="arrowdown">▼ 파랑 11을 붙이고, 파랑 8을 빼와서 8 그룹을 만들면</div>' + setsStaticHTML("b9 b10 b11 | b8 k8 o8", "sm") + "</div>" +
+      '<h3>직접 해보기</h3><div data-practice="p_addtake"></div>',
+    practice: "p_addtake"
+  },
+  {
+    title: "조합 ④ 연속 자르기",
+    html:
+      '<p>긴 연속은 <b>둘로 자를 수</b> 있어요. 단, 자른 뒤에도 양쪽 모두 3개 이상이어야 해요.</p>' +
+      '<div class="demo"><div class="lab">테이블 (바뀌기 전)</div>' + setsStaticHTML("r4 r5 r6 r7 r8", "sm") +
+      '<div class="arrowdown">▼ 4·5·6 과 7·8로 나누고, 내 빨강 6을 넣으면</div>' + setsStaticHTML("r4 r5 r6 | r6 r7 r8", "sm") + "</div>" +
+      '<h3>직접 해보기</h3><div data-practice="p_split"></div>',
+    practice: "p_split"
+  },
+  {
+    title: "조합 ⑤ 그룹과 연속 섞기",
+    html:
+      '<p>연속에서 한 개, 그룹에서 한 개를 가져와 <b>새로운 세트</b>를 만들 수도 있어요.</p>' +
+      '<div class="demo"><div class="lab">테이블 (바뀌기 전) / 내 받침대: 파랑 1</div>' + setsStaticHTML("o1 o2 o3 o4 | o1 b1 r1 k1", "sm") +
+      '<div class="arrowdown">▼ 주황 연속에서 1을, 1 그룹에서 빨강 1을 가져와 내 파랑 1과 합치면</div>' + setsStaticHTML("o1 b1 r1 | o2 o3 o4 | b1 r1 k1", "sm") + "</div>" +
+      '<div class="tipbox"><b>확인</b>세 세트 모두 3개 이상이고 규칙에 맞죠? 그래서 괜찮아요.</div>'
+  },
+  {
+    title: "조합 ⑥ 여러 세트 한꺼번에 바꾸기",
+    html:
+      '<p>실력이 늘면 테이블 전체를 <b>한꺼번에</b> 바꿀 수도 있어요. 설명서의 가장 어려운 예시를 볼까요?</p>' +
+      '<div class="demo"><div class="lab">테이블 (바뀌기 전) / 내 받침대: 검정 10, 파랑 5</div>' +
+      setsStaticHTML("o5 o6 o7 | r5 r6 r7 | k5 k6 k7 k8 k9", "sm") +
+      '<div class="arrowdown">▼ 전부 섞어서 그룹 3개 + 연속 1개로</div>' +
+      setsStaticHTML("b5 o5 r5 k5 | o6 r6 k6 | o7 r7 k7 | k8 k9 k10", "sm") + "</div>" +
+      '<div class="tipbox"><b>천천히 해도 괜찮아요</b>처음에는 ①~④ 방법만 써도 충분해요. 익숙해지면 이런 큰 변신도 보이기 시작합니다.</div>'
+  },
+  {
+    title: "조커 사용법",
+    html:
+      '<p>조커 ' + tileHTML(JK(), "sm") + ' 는 <b>어떤 타일이든 대신</b>할 수 있는 만능 타일이에요.</p>' +
+      "<ul>" +
+      "<li>테이블의 조커 자리에 <b>알맞은 색과 숫자</b>의 타일을 놓으면, 그 조커를 가져와서 쓸 수 있어요.</li>" +
+      "<li>가져온 조커는 <b>그 차례에 바로</b> 새 세트에 넣어 사용해야 해요. 받침대로 가져갈 수 없어요.</li>" +
+      "<li><b>등록(첫 30점)을 하기 전에는</b> 테이블의 조커를 가져올 수 없어요.</li>" +
+      "<li>숫자 3 그룹에 조커가 있다면, 그 그룹에 없는 색의 3을 놓고 조커를 가져오면 돼요.</li>" +
+      "<li>게임이 끝날 때까지 조커를 들고 있으면 <b>벌점 30점</b>! 조심하세요.</li>" +
+      "</ul>" +
+      '<div class="demo"><div class="lab">방법 1 - 조커 자리에 내 타일 넣기</div>' + setsStaticHTML("r3 b3 j", "sm") +
+      '<div class="arrowdown">▼ 검정 3을 넣고 조커를 꺼내 다시 사용</div>' + setsStaticHTML("r3 b3 k3", "sm") + "</div>" +
+      '<div class="demo"><div class="lab">방법 2 - 연속을 둘로 나누고 조커 꺼내기</div>' + setsStaticHTML("r2 r3 j r5 r6", "sm") +
+      '<div class="arrowdown">▼ 내 빨강 1과 7을 넣어 두 개의 연속으로</div>' + setsStaticHTML("r1 r2 r3 | r5 r6 r7", "sm") + "</div>" +
+      '<div class="demo"><div class="lab">방법 3 - 조커가 들어간 연속에 타일 붙이기</div>' + setsStaticHTML("b6 b7 j", "sm") +
+      '<div class="arrowdown">▼ 파랑 5를 넣으면 5·6·7이 되고 조커는 다시 사용</div>' + setsStaticHTML("b5 b6 b7", "sm") + "</div>"
+  },
+  {
+    title: "조커 직접 써보기",
+    html:
+      '<p>조커가 들어간 파랑 6·7 세트가 있어요. 파랑 5를 넣어 조커를 꺼내고, 그 조커로 <b>새 세트</b>를 만들어 보세요.</p>' +
+      '<div data-practice="p_joker"></div>',
+    practice: "p_joker"
+  },
+  {
+    title: "게임 끝내기와 점수 계산",
+    html:
+      '<p>한 사람이 타일을 모두 내려놓고 <b>"루미큐브!"</b>를 외치면 그 판이 끝나요.</p>' +
+      "<ul>" +
+      "<li>진 사람들은 <b>남은 타일 숫자의 합</b>만큼 <b>마이너스</b> 점수를 받아요. (조커는 30점)</li>" +
+      "<li>이긴 사람은 나머지 사람들의 마이너스 점수를 모두 더한 만큼 <b>플러스</b> 점수를 받아요.</li>" +
+      "<li>한 판의 모든 점수를 더하면 <b>0</b>이 되어야 계산이 맞아요.</li>" +
+      "<li>아무도 다 내려놓지 못한 채 풀이 떨어지면, 남은 타일 합이 <b>가장 적은 사람</b>이 이겨요.</li>" +
+      "<li>여러 판을 한 뒤 <b>가장 많이 이긴 사람</b>이 최종 우승! 승수가 같으면 점수가 높은 사람이 우승이에요.</li>" +
+      "</ul>" +
+      '<h3>점수 계산의 예</h3>' +
+      "<table><tr><th>판</th><th>A</th><th>B</th><th>C</th><th>D</th></tr>" +
+      '<tr><td>1판</td><td class="plus">+24</td><td class="minus">-5</td><td class="minus">-16</td><td class="minus">-3</td></tr>' +
+      '<tr><td>2판</td><td class="minus">-6</td><td class="minus">-11</td><td class="plus">+22</td><td class="minus">-5</td></tr>' +
+      '<tr><td>3판</td><td class="minus">-32</td><td class="minus">-13</td><td class="minus">-2</td><td class="plus">+47</td></tr>' +
+      '<tr><td>4판</td><td class="minus">-10</td><td class="minus">-25</td><td class="plus">+41</td><td class="minus">-6</td></tr>' +
+      '<tr class="total"><td>합계</td><td class="minus">-24</td><td class="minus">-54</td><td class="plus">+45</td><td class="plus">+33</td></tr></table>'
+  },
+  {
+    title: "점수 퀴즈",
+    html: '<div data-quiz="q_score"></div>',
+    quiz: "q_score"
+  },
+  {
+    title: "이기는 작전",
+    html:
+      '<div class="tipbox"><b>작전 1 - 처음엔 조금 참기</b>게임 초반에는 타일을 들고 기다리는 것도 좋아요. 테이블에 세트가 많아질수록 숫자조합으로 한 번에 많이 내려놓을 수 있거든요.</div>' +
+      '<div class="tipbox"><b>작전 2 - 네 번째 타일은 남겨두기</b>4개짜리 연속이나 그룹이 있으면 <b>3개만</b> 내려놓고 하나는 들고 있어 보세요. 다음 차례에 타일을 가져오는 대신 그 한 개를 내면 되니까요.</div>' +
+      '<div class="tipbox"><b>작전 3 - 조커는 아껴두기</b>조커는 급할 때 꺼내는 비밀 무기예요. 다만 누군가 먼저 "루미큐브!"를 외치면 벌점 30점이니 너무 오래 들고 있진 마세요.</div>' +
+      '<div class="okbox"><b>매너도 중요해요</b>한 차례는 1분! 친구를 너무 오래 기다리게 하지 않기로 해요.</div>'
+  },
+  {
+    title: "실전 미니게임",
+    html:
+      '<p>혼자 하는 연습판이에요. 타일 14개를 받아 <b>전부 내려놓으면</b> 성공입니다.</p>' +
+      "<ul>" +
+      "<li>첫 등록은 <b>30점 이상</b>이어야 해요.</li>" +
+      "<li>내려놓을 게 없으면 <b>타일 가져오기</b>를 누르세요.</li>" +
+      "<li>규칙에 어긋나면 알려줄게요. <b>되돌리기</b>로 다시 하면 돼요.</li>" +
+      "</ul>" +
+      '<div data-game="1"></div>',
+    game: true
+  },
+  {
+    title: "다 배웠어요!",
+    html:
+      '<div class="cert"><div class="muted">루미큐브 튜토리얼</div>' +
+      '<div class="big">수료를 축하합니다</div>' +
+      "<p>그룹과 연속, 첫 등록 30점, 숫자조합 6가지, 조커, 점수 계산까지<br>모두 배웠어요. 이제 친구들과 진짜 게임을 즐겨보세요!</p>" +
+      '<div style="margin:14px 0">' + setsStaticHTML("b1 r2 o3 k4", "sm") + "</div>" +
+      '<div class="muted">루미큐브 클래식 미니 공통 설명서 기준</div></div>'
+  }
+];
+
+/* ===================== 진행/렌더 ===================== */
+var app = document.getElementById("app");
+var hTitle = document.getElementById("hTitle");
+var hSub = document.getElementById("hSub");
+var pbar = document.getElementById("pbar");
+var prevBtn = document.getElementById("prevBtn");
+var nextBtn = document.getElementById("nextBtn");
+var sheet = document.getElementById("sheet");
+var toc = document.getElementById("toc");
+
+var cur = 0;
+var passed = [];
+for (var z = 0; z < STEPS.length; z++) passed.push(false);
+
+function load(){
+  try {
+    var v = localStorage.getItem("rk_step");
+    if (v !== null){ cur = Math.min(parseInt(v,10) || 0, STEPS.length - 1); }
+    var p = localStorage.getItem("rk_pass");
+    if (p){
+      var arr = JSON.parse(p);
+      for (var i = 0; i < passed.length && i < arr.length; i++) passed[i] = !!arr[i];
+    }
+  } catch(e){}
+}
+function save(){
+  try {
+    localStorage.setItem("rk_step", String(cur));
+    localStorage.setItem("rk_pass", JSON.stringify(passed));
+  } catch(e){}
+}
+
+function needsPass(i){ return !!(STEPS[i].practice || STEPS[i].quiz); }
+
+function updateNav(){
+  prevBtn.disabled = (cur === 0);
+  var last = (cur === STEPS.length - 1);
+  nextBtn.textContent = last ? "처음으로" : "다음";
+  nextBtn.disabled = (!last && needsPass(cur) && !passed[cur]);
+}
+
+function renderQuiz(mount, key){
+  var q = QUIZ[key];
+  var h = "<p class=\"big\">" + q.q + "</p><div class=\"choices\">";
+  for (var i = 0; i < q.choices.length; i++){
+    var c = q.choices[i];
+    var body = c.tiles ? rowHTML(parseTiles(c.tiles), "sm") : ("<span>" + c.text + "</span>");
+    h += '<button class="choice" data-i="' + i + '"><span class="ck">' + (i+1) + "</span>" + body + "</button>";
+  }
+  h += '</div><div class="fb"></div>';
+  mount.innerHTML = h;
+  var btns = mount.querySelectorAll(".choice");
+  var fb = mount.querySelector(".fb");
+  for (var k = 0; k < btns.length; k++){
+    btns[k].addEventListener("click", function(){
+      var idx = parseInt(this.getAttribute("data-i"), 10);
+      var right = q.choices[idx].ok;
+      this.className = "choice " + (right ? "right" : "wrong");
+      fb.className = "fb show " + (right ? "ok" : "no");
+      fb.innerHTML = right ? ("정답입니다! " + q.explain) : "다시 한 번 생각해 볼까요?";
+      if (right){
+        for (var m = 0; m < btns.length; m++) btns[m].disabled = true;
+        passed[cur] = true; save(); updateNav();
+      }
+    });
+  }
+}
+
+function renderStep(){
+  var st = STEPS[cur];
+  hTitle.textContent = st.title;
+  hSub.textContent = (cur + 1) + " / " + STEPS.length + " 단계";
+  pbar.style.width = Math.round(((cur + 1) / STEPS.length) * 100) + "%";
+
+  app.innerHTML = '<div class="card"><h2>' + st.title + "</h2>" + st.html + "</div>";
+
+  var pm = app.querySelector("[data-practice]");
+  if (pm){
+    var key = pm.getAttribute("data-practice");
+    var cfg = PRACTICE[key];
+    makeBoard(pm, {
+      key: key,
+      goal: cfg.goal,
+      hint: cfg.hint,
+      showSum: cfg.showSum,
+      allowTableMove: !!cfg.allowTableMove,
+      mode: "practice",
+      setup: cfg.setup,
+      check: cfg.check,
+      onPass: function(){ passed[cur] = true; save(); updateNav(); }
+    });
+    var sk = document.createElement("div");
+    sk.className = "skip";
+    sk.innerHTML = "<button>이 연습은 건너뛰기</button>";
+    sk.querySelector("button").addEventListener("click", function(){
+      passed[cur] = true; save(); updateNav();
+      this.textContent = "건너뛰었어요. '다음'을 누르세요.";
+    });
+    pm.parentNode.appendChild(sk);
+  }
+
+  var qm = app.querySelector("[data-quiz]");
+  if (qm) renderQuiz(qm, qm.getAttribute("data-quiz"));
+
+  var gm = app.querySelector("[data-game]");
+  if (gm){
+    makeBoard(gm, {
+      key: "game",
+      goal: "받침대의 타일 14개를 모두 내려놓으세요.",
+      mode: "game",
+      allowTableMove: true,
+      setup: gameSetup,
+      check: function(){ return { ok:true, msg:"" }; }
+    });
+  }
+
+  updateNav();
+  window.scrollTo(0, 0);
+  save();
+}
+
+function go(i){
+  cur = Math.max(0, Math.min(i, STEPS.length - 1));
+  renderStep();
+}
+
+prevBtn.addEventListener("click", function(){ go(cur - 1); });
+nextBtn.addEventListener("click", function(){
+  if (cur === STEPS.length - 1){ go(0); return; }
+  passed[cur] = passed[cur] || !needsPass(cur);
+  go(cur + 1);
+});
+
+document.getElementById("menuBtn").addEventListener("click", function(){
+  var h = "";
+  for (var i = 0; i < STEPS.length; i++){
+    var cls = "tocitem" + (i === cur ? " cur" : (passed[i] ? " done" : ""));
+    h += '<button class="' + cls + '" data-go="' + i + '"><span class="num">' + (i+1) + "</span><span>" + STEPS[i].title + "</span></button>";
+  }
+  toc.innerHTML = h;
+  var items = toc.querySelectorAll("[data-go]");
+  for (var k = 0; k < items.length; k++){
+    items[k].addEventListener("click", function(){
+      sheet.className = "sheet";
+      go(parseInt(this.getAttribute("data-go"), 10));
+    });
+  }
+  sheet.className = "sheet on";
+});
+document.getElementById("closeSheet").addEventListener("click", function(){ sheet.className = "sheet"; });
+sheet.addEventListener("click", function(e){ if (e.target === sheet) sheet.className = "sheet"; });
+document.getElementById("resetAll").addEventListener("click", function(){
+  for (var i = 0; i < passed.length; i++) passed[i] = false;
+  sheet.className = "sheet";
+  go(0);
+});
+
+load();
+renderStep();
+})();
+</script>
+</body>
+</html>
